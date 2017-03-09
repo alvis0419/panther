@@ -427,8 +427,6 @@ config PANTHER_SND_PCM0_TLV320AIC3111
 	bool "Texas Instruments TLV320AIC31xx CODECs"
 	select I2C
 	select MONTAGE_I2C
-	select REGMAP
-	select REGMAP_I2C
 
 config PANTHER_SND_PCM0_WM8750
 	bool "Wolfson WM8750"
@@ -981,14 +979,6 @@ config MONTAGE_I2C
         bool "I2C hardware bus support"
         depends on I2C
         default y
-		
-config REGMAP
-	bool "REGMAP"
-	default n
-
-config REGMAP_I2C
-	bool "REGMAP_I2C"
-	default y
 
 config MONTAGE_WATCHDOG
         bool "Watchdog Timer support"

@@ -17,7 +17,7 @@
 #include <mt_types.h>
 #include <common.h>
 #else
-#if defined(CONFIG_CHEETAH_FPGA)
+#if defined(CONFIG_PANTHER_FPGA)
 #define CONFIG_FPGA
 #endif
 #include <asm/types.h>

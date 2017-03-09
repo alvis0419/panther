@@ -268,7 +268,7 @@
 #define EN_EXT_SDR_FNC   (1 << 0)
 
 
-#ifdef CONFIG_CHEETAH_FPGA
+#ifdef CONFIG_PANTHER_FPGA
 #define	DEFAULT_CPU_CLK		75000000
 #define DEFAULT_SYS_CLK     50000000
 #define PBUS_CLK            40000000

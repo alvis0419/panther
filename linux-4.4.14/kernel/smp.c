@@ -216,7 +216,9 @@ static void flush_smp_call_function_queue(bool warn_cpu_offline)
 	struct call_single_data *csd, *csd_next;
 	static bool warned;
 
+#if !defined(CONFIG_PANTHER) && !defined(CONFIG_HOTPLUG_CPU)
 	WARN_ON(!irqs_disabled());
+#endif
 
 	head = this_cpu_ptr(&call_single_queue);
 	entry = llist_del_all(head);
