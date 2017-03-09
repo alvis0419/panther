@@ -1,8 +1,22 @@
 
+--- if you want to try native Openwrt 15.05 toolchain ---
 export PATH=/workplace3/openwrt/toolchain-mipsel_mips32_gcc-4.8-linaro_uClibc-0.9.33.2/bin:$PATH
 export STAGING_DIR=/workplace3/openwrt/toolchain-mipsel_mips32_gcc-4.8-linaro_uClibc-0.9.33.2
+---------------------------------------------------------
 
 
+--- build procedure -------------------------------------
 make ARCH=mips menuconfig
 make ARCH=mips CROSS_COMPILE=mipsel-openwrt-linux- -j8
+
+ --- or ---
+
+export ARCH=mips
+make menuconfig
+make CROSS_COMPILE=mipsel-openwrt-linux- -j8
+
+---------------------------------------------------------
+
+
+
 

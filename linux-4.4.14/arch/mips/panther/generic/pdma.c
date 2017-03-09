@@ -24,6 +24,7 @@
 /*=============================================================================+
 | Included Files                                                               |
 +=============================================================================*/
+#include <linux/module.h>
 #include <asm/mach-panther/pdma.h>
 
 #ifdef PDMA_INTERRUPT
@@ -171,6 +172,8 @@ irqreturn_t pdma_intr_handler(int this_irq, void *dev_id)
 
 int pdma_init(void)
 {
+    int ret;
+    
     if (is_initialized)
     {
         return 0;
@@ -198,9 +201,9 @@ int pdma_init(void)
     PDMAREG(LDMA_CH7_DESCR_BADDR) = PHYSICAL_ADDR(&ch_descr[7]);
 	
 #ifdef PDMA_INTERRUPT
-    request_irq(IRQ_PDMA, pdma_intr_handler, 0, "pdma", (void *) IRQ_PDMA);
+    ret = request_irq(IRQ_PDMA, pdma_intr_handler, 0, "pdma", (void *) IRQ_PDMA);
 #endif
-    return 0;
+    return ret;
 }
 
 void pdma_kick_channel(u32 channel)
@@ -368,3 +371,4 @@ void restart_loop_desc(struct pdma_ch_descr *p_desc)
 }
 
 module_init(pdma_init)
+

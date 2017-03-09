@@ -68,7 +68,7 @@
 #if defined(CONFIG_PANTHER_INTERNAL_DEBUGGER)
 #include <asm/mach-panther/idb.h>
 #endif
-#undef CONFIG_PANTHER_PDMA
+
 #if defined(CONFIG_PANTHER_PDMA)
 #include <asm/mach-panther/pdma.h>
 #endif
