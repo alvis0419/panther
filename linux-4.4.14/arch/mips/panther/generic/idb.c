@@ -3,9 +3,9 @@
     #include <linux/sysrq.h>
 #endif
 
+#include <linux/module.h>
 #include <linux/types.h>
 #include <linux/serial.h>
-#include <linux/serialP.h>
 #include <linux/serial_reg.h>
 
 #include <linux/errno.h>
@@ -96,22 +96,22 @@ void unregister_idb_command(struct idb_command *idb_command)
 EXPORT_SYMBOL(register_idb_command);
 EXPORT_SYMBOL(unregister_idb_command);
 
-int cheetah_uart_poll_init(struct tty_driver *driver, int line, char *options);
-int cheetah_uart_poll_get_char(struct tty_driver *driver, int line);
-void cheetah_uart_poll_put_char(struct tty_driver *driver, int line, char ch);
+int panther_uart_poll_init(struct tty_driver *driver, int line, char *options);
+int panther_uart_poll_get_char(struct tty_driver *driver, int line);
+void panther_uart_poll_put_char(struct tty_driver *driver, int line, char ch);
 
 static void idb_putchar(char ch)
 {
     if (ch == '\n') {
-        cheetah_uart_poll_put_char(NULL, 0, 0xa);
-        cheetah_uart_poll_put_char(NULL, 0, 0xd);
+        panther_uart_poll_put_char(NULL, 0, 0xa);
+        panther_uart_poll_put_char(NULL, 0, 0xd);
     } else
-        cheetah_uart_poll_put_char(NULL, 0, ch);
+        panther_uart_poll_put_char(NULL, 0, ch);
 }
 
 static int idb_getchar(void)
 {
-    return cheetah_uart_poll_get_char(NULL, 0);
+    return panther_uart_poll_get_char(NULL, 0);
 }
 
 int idb_print(const char *fmt, ...)
@@ -504,7 +504,7 @@ void camelot_kernel_debugger(void)
 }
 
 #ifdef CONFIG_MAGIC_SYSRQ
-static void sysrq_handle_idb(int key, struct tty_struct *tty)
+static void sysrq_handle_idb(int key)
 {
     camelot_kernel_debugger();
 }
