@@ -182,91 +182,9 @@ config PANTHER_SMART_TO_USRSPACE
 
 endchoice
 
-
-config PANTHER_HW_TIMER
-	bool "Panther HW TIMER"
-	depends on PANTHER && NO_HZ 
-	default n
-	help
-		This enable hw to write delta time in the next event for CONFIG_NO_HZ enable.
-
-config PANTHER_WLA
-	tristate "Panther WLAN driver"
-	depends on PANTHER
-	#select MAC80211
-	#select WLAN_80211
-
 config PANTHER_WLAN
 	bool "Dragonite WLAN driver"
 	default n
-
-config LINUX_WLA
-	bool "Linux WLA Code"
-	depends on PANTHER_WLA
-	default y
-
-config WLA_WAPI
-	bool "Panther WAPI Support"
-	depends on PANTHER_WLA
-	default y
-
-config WLA_UAPSD
-	bool "Unscheduled automatic power save delivery support"
-	depends on PANTHER_WLA
-	default y
-
-config WLA_HW_AMPDU_RX
-	bool "Panther WiFi AMPDU RX"
-	depends on PANTHER_WLA
-	default y
-
-config WLA_UNIVERSAL_REPEATER
-	bool "Panther WiFi UNIVERSAL REPEATER Support"
-	depends on PANTHER_WLA
-	default y
-
-config MAT_NO_FLUSH_ENTRY_FROM_DHCP
-	bool "Don't Del the MAT Entry Added by DHCP Info"
-	depends on WLA_UNIVERSAL_REPEATER
-	default y
-
-config WLA_DEBUG
-	bool "WiFi debugging"
-	depends on PANTHER_WLA
-	---help---
-	  Say Y, if you need WiFi Driver to display debug messages.
-	  Pass the debug mask as a module parameter:
-
-config WLA_P2P
-	bool "Panther WiFi P2P Support"
-	depends on PANTHER_WLA
-	default n
-
-config WMAC_RECOVER
-	bool "Panther WiFi MAC Recovery"
-	depends on PANTHER_WLA
-	default y
-
-config MONTAGE_APCLIENT
-	bool "Montage AP Client Feature"
-	depends on PANTHER
-	default y
-	---help---
-	patch kernel to let WISP mode work
-
-config MONTAGE_HW_REPORT_TX_ACK
-	bool "Montage REPORT HW ACK STATUS"
-	depends on PANTHER
-	default n
-	---help---
-	Say Y if use nullfunc to keep alive, otherwise use probe req
-
-config MONTAGE_HIDDEN_SSID
-	bool "Montage Patch the Hidden SSID Support for STA Role"
-	depends on PANTHER
-	default y
-	---help---
-	Say Y if support to connect to hidden ssid AP
 
 config PANTHER_ETH
 	bool "Panther Ethernet"
@@ -333,26 +251,6 @@ config HNAT_PATCH
 config SRAM_ENABLE
 	bool "SRAM Enable"
 	depends on PANTHER
-
-config SRAM_BASE
-	hex "SRAM Base address"
-	depends on SRAM_ENABLE && PANTHER
-	default 0xffffffff83f00000
-
-config SRAM_SIZE
-	int "SRAM size"
-	depends on SRAM_ENABLE && PANTHER
-	default 128
-
-config SWITCH_BUF_SIZE
-	int "Switch buffer size"
-	depends on PANTHER
-	default 512
-
-config SWITCH_BUF_COUNT
-	int "Switch buffer header counter"
-	depends on PANTHER
-	default 128
 
 config PANTHER_INTERNAL_DEBUGGER
 	bool "Panther internal debugger"

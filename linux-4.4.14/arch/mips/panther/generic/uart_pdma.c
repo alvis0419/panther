@@ -1827,38 +1827,6 @@ static const struct file_operations rs_proc_fops = {
 };
 #endif
 
-#if defined(CONFIG_CONSOLE_POLL) || defined(CONFIG_PANTHER_INTERNAL_DEBUGGER)
-int panther_uart_poll_init(struct tty_driver *driver, int line, char *options)
-{
-    return 0;
-}
-
-int panther_uart_poll_get_char(struct tty_driver *driver, int line)
-{
-    volatile int *p = (unsigned int *) (UR_BASE + (0x100 * panther_console_index));
-    int ch;
-
-    while (1)
-    {
-        if (URBR_RDY & (ch = p[URBR]) ) // rx flag on, break
-            break;
-    }
-    return ch>>URBR_DTSHFT;
-}
-
-void panther_uart_poll_put_char(struct tty_driver *driver, int line, char ch)
-{
-    int i;
-    volatile int *p = (unsigned int *) (UR_BASE + (0x100 * panther_console_index));
-
-    /* Wait for UARTA_TX register to empty */
-    i = 1000000;
-    while ((p[URCS>>2] & URCS_TF) && i--);
-    /* Send the character */
-    p[URBR>>2] = (int)ch<<URBR_DTSHFT;
-}
-#endif
-
 
 #if defined(CONFIG_PANTHER_INTERNAL_DEBUGGER)
 
@@ -1903,6 +1871,10 @@ struct idb_command idb_uart_cmd =
 };
 
 #endif
+
+int panther_uart_poll_init(struct tty_driver *driver, int line, char *options);
+int panther_uart_poll_get_char(struct tty_driver *driver, int line);
+void panther_uart_poll_put_char(struct tty_driver *driver, int line, char ch);
 
 static const struct tty_operations serial_ops = {
     .open = rs_open,
@@ -2251,3 +2223,47 @@ static int __init _console_setup(char *str)
 __setup("console=", _console_setup);
 
 #endif
+
+
+#if defined(CONFIG_CONSOLE_POLL) || defined(CONFIG_PANTHER_INTERNAL_DEBUGGER)
+
+#include <linux/serial_core.h>
+
+int panther_uart_poll_init(struct tty_driver *driver, int line, char *options)
+{
+    return 0;
+}
+
+int panther_uart_poll_get_char(struct tty_driver *driver, int line)
+{
+    volatile int *p = (unsigned int *) (UR_BASE + (0x100 * panther_console_index));
+    int ch;
+
+#if 1
+    if (URBR_RDY & (ch = p[URBR]) )
+        return ch>>URBR_DTSHFT;
+    else
+        return NO_POLL_CHAR;
+#else
+    while (1)
+    {
+        if (URBR_RDY & (ch = p[URBR]) ) // rx flag on, break
+            break;
+    }
+    return ch>>URBR_DTSHFT;
+#endif
+}
+
+void panther_uart_poll_put_char(struct tty_driver *driver, int line, char ch)
+{
+    int i;
+    volatile int *p = (unsigned int *) (UR_BASE + (0x100 * panther_console_index));
+
+    /* Wait for UARTA_TX register to empty */
+    i = 1000000;
+    while ((p[URCS>>2] & URCS_TF) && i--);
+    /* Send the character */
+    p[URBR>>2] = (int)ch<<URBR_DTSHFT;
+}
+#endif
+
