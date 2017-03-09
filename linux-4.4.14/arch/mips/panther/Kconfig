@@ -34,7 +34,7 @@ config PANTHER_MTD_SIZE
 config PANTHER_KERNEL_SIZE
 	hex "Kernel partitions size"
 	depends on MTD_PANTHER
-	default 0x200000
+	default 2
 
 #config PANTHER_BACKUP_IMAGE
 #	bool "Consider Backup Partition"

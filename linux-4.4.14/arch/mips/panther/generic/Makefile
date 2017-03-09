@@ -6,7 +6,7 @@ NOSTDINC_FLAGS += -I$(src)/../wla/include/
 #obj-$(CONFIG_PANTHER) += init.o setup.o reset.o prom.o time.o int.o platform.o register.o gpio.o sram.o
 #obj-$(CONFIG_PANTHER) += init.o setup.o reset.o prom.o time.o int.o uart_pdma.o platform.o register.o gpio.o sram.o otp.o
 #pwr.o cta_gpio_hotplug.o clk.o mactbl.o
-obj-$(CONFIG_PANTHER) += init.o setup.o reset.o prom.o time.o int.o uart_pdma.o platform.o
+obj-$(CONFIG_PANTHER) += init.o setup.o reset.o prom.o time.o int.o uart_pdma.o platform.o otp.o
 
 obj-$(CONFIG_PM) += pm.o
 

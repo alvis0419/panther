@@ -485,7 +485,7 @@ config PANTHER
 	bool "Panther platform"
 	select BOOT_ELF32
 	select BOOT_RAW
-	#select USB_ARCH_HAS_EHCI
+	select USB_ARCH_HAS_HCD
 	select CEVT_R4K
 	select CSRC_R4K
 	select IRQ_MIPS_CPU

@@ -144,6 +144,24 @@ config MTD_LART
 	  not need any mapping/chip driver for LART. This one does it all
 	  for you, so go disable all of those if you enabled some of them (:
 
+config MTD_MT_SYMPHONY_SPI_FLASH
+        tristate "Montage-tech Symphony spi flash driver"
+        depends on MTD_PANTHER
+        default y
+        help
+          This enables support symphony flash driver. Please note that
+          you do not need any mapping/chip driver for mt_spi_flash. This one
+          does it all for you, so go disable all of those if you enabled
+          some of them (:
+
+config MTD_PDMA_SPI_FLASH
+        tristate "Montage-tech Panther PDMA driver for spi flash"
+        depends on MTD_PANTHER && PANTHER_PDMA
+        default n
+        help
+          This allows you to read/write spi flash with PDMA.
+          If PDMA is enable then read/write will be accelerated by PDMA.
+
 config MTD_MTDRAM
 	tristate "Test driver using RAM"
 	help
