@@ -868,11 +868,6 @@ config PANTHER_UART_BAUDRATE
 	depends on PANTHER
 	default 115200
 
-config PANTHER_VERSION_CODE
-	hex "Panther SoC version"
-	depends on PANTHER
-	default 0x20
-
 config MONTAGE_I2C
         bool "I2C hardware bus support"
         depends on I2C
